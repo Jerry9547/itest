@@ -12,16 +12,16 @@
 
 
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-	    <property name="driverClass" value="com.mysql.jdbc.Driver" />
-	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/community"/>
-	    <property name="username" value="root"/>
-	    <property name="password" value="lin123"/>
-	    <property name="maxConnectionsPerPartition" value="30"/>
-	    <property name="minConnectionsPerPartition" value="10"/>
-	    <property name="partitionCount" value="3"/>
-	    <property name="acquireIncrement" value="5"/>
-	    <property name="statementsCacheSize" value="100"/>
-	    <property name="releaseHelperThreads" value="3"/>
+	    <property name="driverClass" value="${jdbc.driverClassName}" />
+	    <property name="jdbcUrl" value="${jdbc.url}"/>
+	    <property name="username" value="${jdbc.username}"/>
+	    <property name="password" value="${jdbc.password}"/>
+	    <property name="maxConnectionsPerPartition" value="${jdbc.maxConn}"/>
+	    <property name="minConnectionsPerPartition" value="${jdbc.minConn}"/>
+	    <property name="partitionCount" value="${jdbc.parCount}"/>
+	    <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/>
+	    <property name="statementsCacheSize" value="${jdbc.statementsCacheSize}"/>
+	    <property name="releaseHelperThreads" value="${jdbc.releaseHelperThreads}"/>
     </bean>
 	
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">

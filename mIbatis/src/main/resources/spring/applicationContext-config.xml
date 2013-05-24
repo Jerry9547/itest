@@ -8,13 +8,7 @@
 		<property name="locations">
 			<list>
 				<value>
-					classpath*:conf/application.properties
-				</value>
-				<value>
 					classpath*:conf/jdbc.properties
-				</value>
-				<value>
-					classpath*:conf/jecache.properties
 				</value>
 			</list>
 		</property>
