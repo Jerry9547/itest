@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"> 
+
+
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+	    <property name="driverClass" value="com.mysql.jdbc.Driver" />
+	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/community"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="lin123"/>
+	    <property name="maxConnectionsPerPartition" value="30"/>
+	    <property name="minConnectionsPerPartition" value="10"/>
+	    <property name="partitionCount" value="3"/>
+	    <property name="acquireIncrement" value="5"/>
+	    <property name="statementsCacheSize" value="100"/>
+	    <property name="releaseHelperThreads" value="3"/>
+    </bean>
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+	    <property name="configLocation" value="/WEB-INF/classes/sqlmap-config.xml" />
+	    <property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource"></ref>
+		</property>
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+	        <tx:method name="get*" read-only="true" />
+	        <tx:method name="insert*" rollback-for="Exception" />
+	        <tx:method name="add*" rollback-for="Exception" />
+	        <tx:method name="addOrUpdate*" rollback-for="Exception" />
+	        <tx:method name="del*" rollback-for="Exception" />
+	        <tx:method name="update*" rollback-for="Exception" />
+	    </tx:attributes>
+	</tx:advice>
+	<aop:config proxy-target-class="true">
+	    <aop:pointcut id="serviceMethod" expression="execution(* com.itest.service.*Service.*(..))" />
+	    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+	</aop:config>
+	
+	 <bean id="baseDAO" class="com.itest.dao.impl.BaseDAO">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	
+	<bean id="userInfDAO" class="com.itest.dao.impl.UserInfDAOImpl" parent="baseDAO"></bean>
+	
+</beans>

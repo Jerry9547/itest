@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE daoConfig PUBLIC "-//ibatis.apache.org//DTD DAO Configuration 2.0//EN" "http://ibatis.apache.org/dtd/dao-2.dtd">
+<daoConfig>
+    <context>
+        <transactionManager type="SQLMAP">
+            <property name="SqlMapConfigResource" value="conf/sqlmap-config.xml"/>
+        </transactionManager>
+        <dao interface="com.itest.dao.UserInfDAO"  implementation="com.itest.dao.impl.UserInfDAOImpl"/>
+    </context>
+</daoConfig>

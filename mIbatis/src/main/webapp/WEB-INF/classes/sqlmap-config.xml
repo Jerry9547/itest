@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">  
+  
+<sqlMapConfig>  
+    <settings cacheModelsEnabled="true"  useStatementNamespaces="true" />  
+    <transactionManager type="JDBC">  
+        <dataSource type="SIMPLE">  
+            <property name="JDBC.Driver" value="com.mysql.jdbc.Driver" />  
+            <property name="JDBC.ConnectionURL" value="jdbc:mysql://127.0.0.1:3306/community" />  
+            <property name="JDBC.Username" value="root" />  
+            <property name="JDBC.Password" value="lin123" />  
+        </dataSource>  
+     </transactionManager>  
+    <sqlMap resource="com/itest/entity/t_user_info_SqlMap.xml" />  
+</sqlMapConfig>
